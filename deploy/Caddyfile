@@ -1,0 +1,19 @@
+# {$DOMAIN} is substituted from the .env file at container start.
+# Caddy automatically requests and renews a Let's Encrypt certificate for
+# whatever domain is listed here — no certbot, no manual renewal cron job.
+{$DOMAIN} {
+    handle /api/* {
+        reverse_proxy backend:8080
+    }
+
+    handle {
+        root * /usr/share/caddy
+        file_server
+        # SPA fallback: a direct browser hit on /profile or /home would
+        # 404 at Caddy without this, since those paths only exist to
+        # React Router client-side, not as real files on disk.
+        try_files {path} /index.html
+    }
+
+    encode gzip
+}

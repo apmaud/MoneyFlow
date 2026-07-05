@@ -1,0 +1,60 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: moneymovement-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: moneymovement
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - moneymovement-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    # no ports
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: moneymovement-backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__Default: "Host=postgres;Port=5432;Database=moneymovement;Username=postgres;Password=${POSTGRES_PASSWORD}"
+      Jwt__SigningKey: ${JWT_SIGNING_KEY}
+      Jwt__Issuer: MoneyMovementSimulator
+      AllowedOrigin: "https://${DOMAIN}"
+    # No ports, hostname backend:8080
+  caddy:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: /api
+    container_name: moneymovement-caddy
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMAIN: ${DOMAIN}
+    volumes:
+        # takes caddyfile in repo and makes it appear at that exactly path inside the container, Read-Only
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      # persistence for digi cert from Lets Encrypt
+      - caddy-data:/data
+      - caddy-config:/config
+
+volumes:
+  moneymovement-pgdata:
+  caddy-data:
+  caddy-config:

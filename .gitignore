@@ -1,0 +1,16 @@
+# .NET build output
+bin/
+obj/
+
+# Rider
+.idea/
+
+# VS Code
+.vscode/
+
+# OS noise
+.DS_Store
+Thumbs.db
+
+# no need to explain lol
+.env

@@ -1,0 +1,27 @@
+.money-flow-hero circle.account-node {
+  animation: breathe 6s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.money-flow-hero circle.account-node:nth-of-type(2) {
+  animation-delay: -2s;
+}
+.money-flow-hero circle.account-node:nth-of-type(3) {
+  animation-delay: -4s;
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
+/* Respect the user's motion preference: freeze everything in place rather
+   than looping continuously. */
+@media (prefers-reduced-motion: reduce) {
+  .money-flow-hero circle.account-node {
+    animation: none;
+  }
+  .money-flow-hero animateMotion {
+    display: none;
+  }
+}

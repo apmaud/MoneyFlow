@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Application references Domain only. It must never reference
+         Infrastructure or Api — no EF Core, no ASP.NET, no Npgsql here. -->
+    <ProjectReference Include="..\MoneyMovement.Domain\MoneyMovement.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

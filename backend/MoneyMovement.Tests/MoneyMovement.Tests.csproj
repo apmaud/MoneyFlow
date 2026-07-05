@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Unit tests only need Application (+ Domain transitively) and use
+         Fakes/ instead of real Infrastructure. Integration tests need
+         Infrastructure too, to exercise the real EF Core repositories. -->
+    <ProjectReference Include="..\MoneyMovement.Domain\MoneyMovement.Domain.csproj" />
+    <ProjectReference Include="..\MoneyMovement.Application\MoneyMovement.Application.csproj" />
+    <ProjectReference Include="..\MoneyMovement.Infrastructure\MoneyMovement.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

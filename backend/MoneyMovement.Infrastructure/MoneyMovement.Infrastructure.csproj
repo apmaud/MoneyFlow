@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Infrastructure implements Application's interfaces, so it references
+         both Application and (transitively) Domain. Nothing outside this
+         project ever references EF Core or Npgsql directly. -->
+    <ProjectReference Include="..\MoneyMovement.Domain\MoneyMovement.Domain.csproj" />
+    <ProjectReference Include="..\MoneyMovement.Application\MoneyMovement.Application.csproj" />
+  </ItemGroup>
+
+</Project>
