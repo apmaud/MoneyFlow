@@ -2,7 +2,7 @@ import axios from "axios";
 import { store } from "../store/store";
 import { logout } from "../store/authSlice";
 
-const baseURL = import.meta.env.VITE_API_URL || "http://localhost:5080";
+const baseURL = import.meta.env.VITE_API_URL ?? "http://localhost:5080";
 
 export const apiClient = axios.create({
   baseURL,
