@@ -29,14 +29,13 @@ public record TransferResponse(
     string ToAccountNumber,
     decimal Amount,
     TransferStatus Status,
-    string? FlagReason,
     string? FailureReason,
     DateTime CreatedAt,
     DateTime? CompletedAt)
 {
     public static TransferResponse FromDomain(Transfer t, string fromAccountNumber, string toAccountNumber) => new(
         t.Id, t.FromAccountId, fromAccountNumber, t.ToAccountId, toAccountNumber, t.Amount, t.Status,
-        t.FlagReason, t.FailureReason, t.CreatedAt, t.CompletedAt);
+        t.FailureReason, t.CreatedAt, t.CompletedAt);
 }
 
 public record ReviewTransferRequest(bool Approve, string? Reason);
