@@ -200,10 +200,10 @@ public class TransferService
                     transfer.MarkCompleted(_clock.UtcNow);
                 
                 // Save
-                await _accounts.SaveAsync(fromAccount, ct);
-                await _accounts.SaveAsync(toAccount, ct);
-                await _transfers.SaveAsync(transfer, ct);
-                await _unitOfWork.SaveChangesAsync(ct);
+                await _accounts.SaveAsync(fromAccount, ct); // does nothing but keep these method calls for future-proofing
+                await _accounts.SaveAsync(toAccount, ct); // does nothing
+                await _transfers.SaveAsync(transfer, ct); // does nothing
+                await _unitOfWork.SaveChangesAsync(ct); // where everything actually commits rn
 
                 return; // success
             }

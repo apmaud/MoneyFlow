@@ -4,7 +4,7 @@ using MoneyMovement.Domain;
 
 namespace MoneyMovement.Infrastructure.Persistence;
 
-// Implements IUnitOfWork, saves as one atomic transaction
+// INHERITS DBCONTEXT and IMPLEMENTS IUnitOfWork, saves as one atomic transaction
 public class MoneyMovementDbContext : DbContext, IUnitOfWork
 {
     public DbSet<Account> Accounts => Set<Account>();
